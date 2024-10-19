@@ -1,0 +1,29 @@
+# Ignore virtual environment directories
+venv/
+myenv/
+
+# Ignore Python cache files
+__pycache__/
+
+# Ignore log files
+*.log
+
+# Ignore macOS system files
+.DS_Store
+
+# Ignore other unnecessary files or directories
+*.pyc
+*.pem
+*.pub
+*.xlsx
+*.csv
+*.json
+*.jpg
+*.png
+*.jpeg
+*.pdf
+*.docx
+*.rtf
+
+# Ignore directories outside the project
+../

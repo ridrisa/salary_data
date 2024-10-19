@@ -1,0 +1,66 @@
+<!-- templates/postgresql.html -->
+{% extends "base.html" %}
+
+{% block title %}PostgreSQL Database Query Tool{% endblock %}
+{% block page_title %}PostgreSQL Database Query Tool{% endblock %}
+
+{% block content %}
+<div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+    <form id="queryForm" class="space-y-4">
+        <!-- Table Selection -->
+        <div class="mb-4">
+            <label for="table" class="block text-sm font-medium text-gray-700 mb-2">Select Table</label>
+            <select id="table" name="table" class="form-select">
+                <option value="">Choose a table</option>
+            </select>
+        </div>
+
+        <!-- Columns Selection -->
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Select Columns</label>
+            <div class="flex items-center mb-2">
+                <input type="checkbox" id="selectAll" class="mr-2">
+                <label for="selectAll" class="text-sm text-gray-600">Select All</label>
+            </div>
+            <div id="columns" class="space-y-2 max-h-40 overflow-y-auto"></div>
+        </div>
+
+        <!-- Limit -->
+        <div class="mb-4">
+            <label for="limit" class="block text-sm font-medium text-gray-700 mb-2">Limit</label>
+            <input type="number" id="limit" name="limit" min="1" class="form-input">
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex justify-between">
+            <button type="submit" class="button button-primary">
+                <i class="fas fa-play mr-2"></i> Execute Query
+            </button>
+            <button type="button" id="downloadCsv" class="button button-secondary">
+                <i class="fas fa-download mr-2"></i> Download CSV
+            </button>
+        </div>
+    </form>
+</div>
+
+<!-- Custom Query Section -->
+<div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+    <h2 class="text-2xl font-semibold text-gray-800 mb-4">Custom Query</h2>
+    <form id="customQueryForm" class="space-y-4">
+        <div class="mb-4">
+            <label for="customQuery" class="block text-sm font-medium text-gray-700 mb-2">Enter your SQL query</label>
+            <textarea id="customQuery" name="customQuery" rows="4" class="form-textarea"></textarea>
+        </div>
+        <button type="submit" class="button button-primary">
+            <i class="fas fa-play mr-2"></i> Execute Custom Query
+        </button>
+    </form>
+</div>
+
+<!-- Results -->
+<div id="results" class="mt-8"></div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='postgresql.js') }}"></script>
+{% endblock %}

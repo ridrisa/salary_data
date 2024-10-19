@@ -1,0 +1,84 @@
+<!-- templates/salaries_results.html -->
+{% if results %}
+<!-- Results Section -->
+<div class="bg-white rounded-lg shadow p-6 mb-8">
+    <h2 class="text-2xl font-semibold text-gray-800 mb-6">Results for period: <span id="period" class="text-indigo-600">{{ start_period }} to {{ end_period }}</span></h2>
+    
+    <!-- Chart -->
+    <div class="mb-8">
+        <canvas id="salaryChart" width="400" height="200"></canvas>
+    </div>
+    
+    <!-- Table -->
+    <div class="table-responsive">
+        <table class="table-auto">
+            <thead>
+                <tr>
+                    <th>BARQ ID</th>
+                    <th>Name</th>
+                    <th>Total Orders</th>
+                    <th>Basic Salary</th>
+                    <th>Bonus Amount</th>
+                    <th>Gas Deserved</th>
+                    <th>Gas Difference</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in results %}
+                <tr>
+                    <td>{{ result.BARQ_ID }}</td>
+                    <td>{{ result.Name }}</td>
+                    <td>{{ result.Total_Orders }}</td>
+                    <td>SAR {{ result.Basic_Salary|round(2) }}</td>
+                    <td>SAR {{ result.Bonus_Amount|round(2) }}</td>
+                    <td>SAR {{ result.Gas_Deserved|round(2) }}</td>
+                    <td>SAR {{ result.Gas_Difference|round(2) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
+
+{% if error %}
+<!-- Error Message -->
+<div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-8" role="alert">
+    <p class="font-bold">Error</p>
+    <p>{{ error }}</p>
+</div>
+{% endif %}
+
+<!-- Chart Initialization Script -->
+<script id="salaryChartScript">
+    {% if results %}
+    const results = {{ results|tojson }};
+    createChart(results);
+    function createChart(results) {
+        const ctx = document.getElementById('salaryChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: results.map(r => r.Name),
+                datasets: [{
+                    label: 'Net Salary',
+                    data: results.map(r => r.Net_Salary),
+                    backgroundColor: 'rgba(99, 102, 241, 0.6)',
+                    borderColor: 'rgba(99, 102, 241, 1)',
+                    borderWidth: 1,
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { beginAtZero: true }
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { enabled: true }
+                }
+            }
+        });
+    }
+    {% endif %}
+</script>

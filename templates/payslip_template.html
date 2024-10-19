@@ -1,0 +1,72 @@
+<!-- templates/payslip_template.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Payslip for {{ result.Name }}</title>
+    <style>
+        /* Payslip styles */
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+        .payslip-container { width: 800px; margin: 0 auto; padding: 20px; }
+        .header { text-align: center; }
+        .header h1 { margin-bottom: 5px; }
+        .header p { margin-top: 0; }
+        .details, .salary { margin-top: 30px; }
+        .details table, .salary table { width: 100%; border-collapse: collapse; }
+        .details th, .details td, .salary th, .salary td { padding: 8px; border: 1px solid #ddd; }
+        .details th { background-color: #f9f9f9; text-align: left; }
+        .salary th { background-color: #f1f1f1; text-align: left; }
+        .total { font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="payslip-container">
+        <div class="header">
+            <h1>Payslip</h1>
+            <p>For the period {{ start_period }} to {{ end_period }}</p>
+        </div>
+        <!-- Employee Details -->
+        <div class="details">
+            <table>
+                <tr>
+                    <th>Employee ID</th>
+                    <td>{{ result.BARQ_ID }}</td>
+                    <th>Name</th>
+                    <td>{{ result.Name }}</td>
+                </tr>
+                <tr>
+                    <th>Joining Date</th>
+                    <td>{{ result.joining_date }}</td>
+                    <th>Supervisor</th>
+                    <td>{{ result.Supervisor }}</td>
+                </tr>
+            </table>
+        </div>
+        <!-- Salary Details -->
+        <div class="salary">
+            <table>
+                <tr>
+                    <th>Description</th>
+                    <th>Amount (SAR)</th>
+                </tr>
+                <tr>
+                    <td>Basic Salary</td>
+                    <td>{{ result.Basic_Salary|round(2) }}</td>
+                </tr>
+                <tr>
+                    <td>Bonus Amount</td>
+                    <td>{{ result.Bonus_Amount|round(2) }}</td>
+                </tr>
+                <tr>
+                    <td>Gas Difference</td>
+                    <td>-{{ result.Gas_Difference|round(2) }}</td>
+                </tr>
+                <tr class="total">
+                    <td>Net Salary</td>
+                    <td>{{ net_salary|round(2) }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

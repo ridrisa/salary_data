@@ -1,0 +1,76 @@
+<!-- templates/base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block meta %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% endblock %}
+    <title>{% block title %}Salary Portal{% endblock %}</title>
+    <!-- Tailwind CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="bg-gray-50 font-sans antialiased">
+    <!-- Navbar -->
+    <nav class="bg-white shadow">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <!-- Logo -->
+                <a href="{{ url_for('index') }}" class="text-2xl font-bold text-indigo-600">Salary Portal</a>
+                <!-- Navigation Links -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="{{ url_for('index') }}" class="{% if request.endpoint == 'index' %}text-indigo-600{% else %}text-gray-600{% endif %} hover:text-indigo-600 font-medium">Custom Tables</a>
+                    <a href="{{ url_for('postgresql_page') }}" class="{% if request.endpoint == 'postgresql_page' %}text-indigo-600{% else %}text-gray-600{% endif %} hover:text-indigo-600 font-medium">Barq Admin Tables</a>
+                    <a href="{{ url_for('salaries_route') }}" class="{% if request.endpoint == 'salaries_route' %}text-indigo-600{% else %}text-gray-600{% endif %} hover:text-indigo-600 font-medium">Ajeer Salaries</a>
+                    <a href="{{ url_for('payslip') }}" class="{% if request.endpoint == 'payslip' %}text-indigo-600{% else %}text-gray-600{% endif %} hover:text-indigo-600 font-medium">Generate Payslip</a>
+                </div>
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-600 hover:text-indigo-600 focus:outline-none">
+                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="{{ url_for('index') }}" class="block px-3 py-2 rounded-md text-base font-medium {% if request.endpoint == 'index' %}text-indigo-600{% else %}text-gray-600{% endif %} hover:text-indigo-600">Custom Tables</a>
+                <a href="{{ url_for('postgresql_page') }}" class="block px-3 py-2 rounded-md text-base font-medium {% if request.endpoint == 'postgresql_page' %}text-indigo-600{% else %}text-gray-600{% endif %} hover:text-indigo-600">Barq Admin Tables</a>
+                <a href="{{ url_for('salaries_route') }}" class="block px-3 py-2 rounded-md text-base font-medium {% if request.endpoint == 'salaries_route' %}text-indigo-600{% else %}text-gray-600{% endif %} hover:text-indigo-600">Ajeer Salaries</a>
+                <a href="{{ url_for('payslip') }}" class="block px-3 py-2 rounded-md text-base font-medium {% if request.endpoint == 'payslip' %}text-indigo-600{% else %}text-gray-600{% endif %} hover:text-indigo-600">Generate Payslip</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-center text-indigo-700 mb-8">{% block page_title %}{% endblock %}</h1>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white">
+        <div class="container mx-auto px-4 py-4 text-center text-gray-500">
+            &copy; {{ current_year }} Salary Portal. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    {% block scripts %}
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+    {% endblock %}
+</body>
+</html>

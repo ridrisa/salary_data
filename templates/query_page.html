@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Query Page</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Query Execution</h1>
+        <nav>
+            <a href="/">Home</a>
+        </nav>
+    </header>
+    <main>
+        <form id="query-form">
+            <textarea id="query" placeholder="Write your query here"></textarea>
+            <button type="submit">Run BigQuery</button>
+            <button type="submit">Run PostgreSQL Query</button>
+        </form>
+        <div id="query-result"></div>
+    </main>
+    <script src="/static/query.js"></script>
+</body>
+</html>
