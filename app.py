@@ -1,5 +1,3 @@
-# app.py
-
 from flask import Flask, render_template, request, jsonify, send_file, make_response, url_for
 from google.cloud import bigquery
 from google.oauth2 import service_account
